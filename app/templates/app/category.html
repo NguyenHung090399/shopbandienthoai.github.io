@@ -45,7 +45,7 @@
             <hr>
             <div class="bt" style="width: 303px; display: flex;">
               <button data-product = "{{product.id}}" data-action = "add" class="btn btn-outline-secondary add-btn update-cart">Thêm giỏ hàng</button>
-              <a class="btn btn-outline-success" href="">Xem</a>
+              <a class="btn btn-outline-success" href="/detail_product/{{product.id}}">Xem</a>
               <div class="price" style="margin: 0px 10px 0 10px; ">
                 <h5 style="display: block; float: right"><strong>{{product.price | floatformat:2}} $ </strong></h5>
               </div>

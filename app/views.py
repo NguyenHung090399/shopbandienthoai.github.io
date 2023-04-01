@@ -131,12 +131,12 @@ def updateItem(request) :
 
 def detail_product(request , id) : 
     category = Category.objects.filter()
-    product_list = Product.objects.filter()
+    product = Product.objects.get(id = id)
 
     if request.user.is_authenticated : # kiem tra user da duoc xac thu chua 
         customer = request.user.customer
         order , created = Order.objects.get_or_create(customer = customer , complete = False)
-        items = order.orderitem_set.all()
+        items = order.orderitem_set.get(product = id)
         cartItem = order.get_cart_item
     else : 
         items = []
@@ -144,5 +144,23 @@ def detail_product(request , id) :
         order = {'get_cart_item' : 0 , 'get_cart_total' : 0}
         cartItem = order['get_cart_item']
 
-    context = {'product_list' : product_list , 'category':category , 'cartItem':cartItem  , 'profile':customer }
+    context = {'product' : product , 'category':category , 'cartItem':cartItem  , 'profile':customer , 'order':order , 'items' : items }
     return render(request , 'app/detail_product.html' , context)
+
+def detailItem(request) : 
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    print('Action:' , action )
+    print('Product:' , productId)
+
+    customer = request.user.customer
+    product = Product.objects.get(id  = productId)
+    order , created = Order.objects.get_or_create(customer = customer , complete = False)
+    orderItem , created = OrderItem.objects.get_or_create(order = order , product = product)
+    if orderItem.quantity >= 0 and action=='add':
+            orderItem.quantity+=1
+    if orderItem.quantity > 0 and action == 'remove' : 
+        orderItem.quantity-=1
+    orderItem.save()
+    return JsonResponse('added' , safe=False)

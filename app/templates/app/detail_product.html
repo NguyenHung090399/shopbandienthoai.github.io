@@ -8,26 +8,34 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="images p-3">
-                            <div class="text-center p-4"> <img id="main-image" src="https://i.imgur.com/Dhebu4F.jpg" width="250" /> </div>
-                            <div class="thumbnail text-center"> <img onclick="change_image(this)" src="https://i.imgur.com/Rx7uKd0.jpg" width="70"> <img onclick="change_image(this)" src="https://i.imgur.com/Dhebu4F.jpg" width="70"> </div>
+                            <div class="text-center p-4"> <img id="main-image" src="{{product.ImageURL}}" width="250" /> </div>
+                            <div class="thumbnail text-center"> <img onclick="change_image(this)" src="{{product.ImageURL}}" width="70"> <img onclick="change_image(this)" src="{{product.ImageURL}}" width="70"> </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="product p-4">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1"><a href="{% url 'home' %}">Back</a></span> </div> <a href="/cart"><i class="fa fa-shopping-cart text-muted"></i></a>
+                                <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1" style="margin-left: 5px;"><a href="{% url 'home' %}">Back</a></span> </div> <a href="/cart"><i class="fa fa-shopping-cart text-muted"></i></a>
                             </div>
-                            <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Tên hãng</span>
-                                <h5 class="text-uppercase">Tên sản phẩm</h5>
-                                <div class="price d-flex flex-row align-items-center"> <span class="act-price">Giá</span>
-                                    <div class="ml-2"> <small class="price">100 $</small></div>
+                            <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">{{product.category}}</span>
+                                <h5 class="text-uppercase">{{product.name}}</h5>
+                                <div class="price d-flex flex-row align-items-center"> <span class="act-price" style="margin-right: 5px;">Giá : </span>
+                                    <div class="ml-2"> <small class="price"> {{product.price}} $</small></div>
                                 </div>
                             </div>
-                            <p class="about">Shop from a wide range of t-shirt from orianz. Pefect for your everyday use, you could pair it with a stylish pair of jeans or trousers complete the look.</p>
+                            <p class="about">{{product.describe}}</p>
                             <div class="sizes mt-5">
-                                <h6 class="text-uppercase">Màu</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
+                                <h6 class="text-uppercase">Số lượng</h6> 
+                                <div style="flex:1">
+                                    <p class="quantity">{{items.quantity}}</p>
+                                    <div class="quantity">
+                                        <img data-product = "{{items.product.id}}" data-action = "add" class="chg-quantity detail-item" src="{% static  'app/images/arrow-up.png' %}">
+                                
+                                        <img data-product = "{{items.product.id}}" data-action = "remove" class="chg-quantity detail-item" src="{% static  'app/images/arrow-down.png' %}">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="cart mt-4 align-items-center"> <button class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
+                            <div class="cart mt-4 align-items-center"> <button data-product={{product.id}} data-action="add" class="btn btn-danger text-uppercase mr-2 px-4 detail-item">Add to cart</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
                         </div>
                     </div>
                 </div>
